@@ -8,9 +8,9 @@
 
 """
 
-__author__ = 'contact@josephkariuki.com'
-__date__ = '2022-01-23'
-__copyright__ = 'Copyright 2022, Joseph Kariuki'
+__author__ = "contact@josephkariuki.com"
+__date__ = "2022-01-23"
+__copyright__ = "Copyright 2022, Joseph Kariuki"
 
 import unittest
 
@@ -30,7 +30,7 @@ class PolygonSpikeRemoverDialogTest(unittest.TestCase):
 
     def test_icon_png(self):
         """Test we can click OK."""
-        path = ':/plugins/PolygonSpikeRemover/img/icons/icon.png'
+        path = ":/plugins/PolygonSpikeRemover/img/icons/icon.png"
         icon = QIcon(path)
         self.assertFalse(icon.isNull())
 

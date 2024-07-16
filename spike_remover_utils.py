@@ -27,6 +27,7 @@ class GeometryProcessor:
     a specified angle and the edges of the triangle that are part of the
     geometry boundary have a length greater than a specified length.
     """
+
     min_angle: float = 1.0
     min_distance: float = 100000.0
 
@@ -34,11 +35,7 @@ class GeometryProcessor:
         self.min_angle = min_angle % 360
         self.min_distance = abs(min_distance)
 
-    def process_sequence(
-            self,
-            geod: Geod,
-            sequence: coords.CoordinateSequence
-    ) -> list:
+    def process_sequence(self, geod: Geod, sequence: coords.CoordinateSequence) -> list:
         """
         Process a sequence of coordinate points and remove all spikes. If the
         sequence would form a simple triangle, we skip the sequence and return
@@ -69,18 +66,21 @@ class GeometryProcessor:
         final_geometry = []
 
         for triplet in triplets:
-            mark = self.process_triplet(geod, [
-                vertices[triplet[0]],
-                vertices[triplet[1]],
-                vertices[triplet[2]],
-            ])
+            mark = self.process_triplet(
+                geod,
+                [
+                    vertices[triplet[0]],
+                    vertices[triplet[1]],
+                    vertices[triplet[2]],
+                ],
+            )
 
             if not mark:
                 final_geometry.append(vertices[triplet[1]])
 
         return final_geometry
 
-    def process_triplet(self, geod:Geod, triplet: list) -> bool:
+    def process_triplet(self, geod: Geod, triplet: list) -> bool:
         """
         Process a triplet of vertices and check if the second vertex can be
         marked as a spike. A triplet of vertices is a collection of three
@@ -165,4 +165,3 @@ def extract_crs_geod(data: GeoDataFrame) -> Geod:
         a=data.crs.ellipsoid.semi_major_metre,
         rf=data.crs.ellipsoid.inverse_flattening,
     )
-

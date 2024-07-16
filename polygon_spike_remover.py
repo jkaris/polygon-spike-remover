@@ -25,7 +25,12 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QPixmap
 from qgis.PyQt.QtWidgets import (
-    QAction, QWidget, QVBoxLayout, QPushButton, QFileDialog, QMessageBox
+    QAction,
+    QWidget,
+    QVBoxLayout,
+    QPushButton,
+    QFileDialog,
+    QMessageBox,
 )
 from qgis.core import QgsProject
 from qgis.gui import QgsMapCanvas
@@ -59,11 +64,10 @@ class PolygonSpikeRemover:
         self.plugin_dir = os.path.dirname(__file__)
 
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QSettings().value("locale/userLocale")[0:2]
         locale_path = os.path.join(
-            self.plugin_dir,
-            'i18n',
-            'PolygonSpikeRemover_{}.qm'.format(locale))
+            self.plugin_dir, "i18n", "PolygonSpikeRemover_{}.qm".format(locale)
+        )
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -72,9 +76,9 @@ class PolygonSpikeRemover:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Polygon Spike Remover')
-        self.toolbar = self.iface.addToolBar(u'PolygonSpikeRemover')
-        self.toolbar.setObjectName(u'PolygonSpikeRemover')
+        self.menu = self.tr("&Polygon Spike Remover")
+        self.toolbar = self.iface.addToolBar("PolygonSpikeRemover")
+        self.toolbar.setObjectName("PolygonSpikeRemover")
         self.pluginIsActive = False
         self.dockwidget = None
         self._btn_icons = None
@@ -98,19 +102,20 @@ class PolygonSpikeRemover:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('PolygonSpikeRemover', message)
+        return QCoreApplication.translate("PolygonSpikeRemover", message)
 
     def add_action(
-            self,
-            icon_path,
-            text,
-            callback,
-            enabled_flag=True,
-            add_to_menu=True,
-            add_to_toolbar=True,
-            status_tip=None,
-            whats_this=None,
-            parent=None):
+        self,
+        icon_path,
+        text,
+        callback,
+        enabled_flag=True,
+        add_to_menu=True,
+        add_to_toolbar=True,
+        status_tip=None,
+        whats_this=None,
+        parent=None,
+    ):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -165,9 +170,7 @@ class PolygonSpikeRemover:
             self.toolbar.addAction(action)
 
         if add_to_menu:
-            self.iface.addPluginToVectorMenu(
-                self.menu,
-                action)
+            self.iface.addPluginToVectorMenu(self.menu, action)
 
         self.actions.append(action)
 
@@ -176,12 +179,13 @@ class PolygonSpikeRemover:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/polygon_spike_remover/img/icons/icon.png'
+        icon_path = ":/plugins/polygon_spike_remover/img/icons/icon.png"
         self.add_action(
             icon_path,
-            text=self.tr(u'Polygon Spike Remover'),
+            text=self.tr("Polygon Spike Remover"),
             callback=self.run,
-            parent=self.iface.mainWindow())
+            parent=self.iface.mainWindow(),
+        )
 
     # --------------------------------------------------------------------------
 
@@ -200,9 +204,7 @@ class PolygonSpikeRemover:
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
-            self.iface.removePluginVectorMenu(
-                self.tr(u'&Polygon Spike Remover'),
-                action)
+            self.iface.removePluginVectorMenu(self.tr("&Polygon Spike Remover"), action)
             self.iface.removeToolBarIcon(action)
         del self.toolbar
 
@@ -218,35 +220,29 @@ class PolygonSpikeRemover:
             # Set button text
             if not self.btn_load_gpkg:
                 self.btn_load_gpkg = QPushButton()
-                self.btn_load_gpkg.setText('Open geopackage...')
+                self.btn_load_gpkg.setText("Open geopackage...")
             if not self.btn_remove_spike:
                 self.btn_remove_spike = QPushButton()
-                self.btn_remove_spike.setText('Remove spike(s)')
+                self.btn_remove_spike.setText("Remove spike(s)")
             if not self.btn_clear_map:
                 self.btn_clear_map = QPushButton()
-                self.btn_clear_map.setText('Clear map view')
+                self.btn_clear_map.setText("Clear map view")
             # Set button icons
             if not self._btn_icons:
                 self._btn_icons = {
-                    'load_data': QPixmap(
-                        ':/plugins/polygon_spike_remover/img/icons/load_data.png'
+                    "load_data": QPixmap(
+                        ":/plugins/polygon_spike_remover/img/icons/load_data.png"
                     ),
-                    'remove_spike': QPixmap(
-                        ':/plugins/polygon_spike_remover/img/icons/remove_spike.png'
+                    "remove_spike": QPixmap(
+                        ":/plugins/polygon_spike_remover/img/icons/remove_spike.png"
                     ),
-                    'clear_map': QPixmap(
-                        ':/plugins/polygon_spike_remover/img/icons/clear_map.png'
-                    )
+                    "clear_map": QPixmap(
+                        ":/plugins/polygon_spike_remover/img/icons/clear_map.png"
+                    ),
                 }
-            self.btn_load_gpkg.setIcon(
-                QIcon(self._btn_icons.get('load_data'))
-            )
-            self.btn_remove_spike.setIcon(
-                QIcon(self._btn_icons.get('remove_spike'))
-            )
-            self.btn_clear_map.setIcon(
-                QIcon(self._btn_icons.get('clear_map'))
-            )
+            self.btn_load_gpkg.setIcon(QIcon(self._btn_icons.get("load_data")))
+            self.btn_remove_spike.setIcon(QIcon(self._btn_icons.get("remove_spike")))
+            self.btn_clear_map.setIcon(QIcon(self._btn_icons.get("clear_map")))
             # Connecting signals to slots
             self.btn_load_gpkg.clicked.connect(self._on_load_geopackage)
             self.btn_remove_spike.clicked.connect(self._on_remove_spike)
@@ -281,10 +277,7 @@ class PolygonSpikeRemover:
         if not self.file_dlg:
             self.file_dlg = QFileDialog()
             path, _ = self.file_dlg.getOpenFileName(
-                None,
-                'Select a GeoPackage file...',
-                '~/',
-                '*.gpkg'
+                None, "Select a GeoPackage file...", "~/", "*.gpkg"
             )
 
             if path:
@@ -300,9 +293,7 @@ class PolygonSpikeRemover:
         gpkg_layers = [n.GetName() for n in ogr.Open(file_path)]
         for name in gpkg_layers:
             # vlayer.geometryType() == QgsWkbTypes.PolygonGeometry
-            self.iface.addVectorLayer(
-                file_path + "|layername=" + name, name, 'ogr'
-            )
+            self.iface.addVectorLayer(file_path + "|layername=" + name, name, "ogr")
 
         if len(self.iface.mapCanvas().layers()) == 0:
             self.btn_remove_spike.setEnabled(True)
@@ -314,8 +305,10 @@ class PolygonSpikeRemover:
         """
         loaded_layers = self.iface.mapCanvas().layers()
         if len(loaded_layers) > 0:
-            layer_paths = [layer.dataProvider().dataSourceUri()
-                           for layer in self.iface.mapCanvas().layers()]
+            layer_paths = [
+                layer.dataProvider().dataSourceUri()
+                for layer in self.iface.mapCanvas().layers()
+            ]
             self._process_gpkg(layer_paths)
 
     def _process_gpkg(self, paths):
@@ -325,7 +318,7 @@ class PolygonSpikeRemover:
         :type paths: str
         """
         for path in paths:
-            path_to_gpkg = path.split('|')[0]
+            path_to_gpkg = path.split("|")[0]
             ds = load_geopackage(path_to_gpkg)
             # Check validity of layer CRS
             if not validate_crs(ds):
@@ -334,7 +327,7 @@ class PolygonSpikeRemover:
                 msg_box.setText("Error in processing layer CRS")
                 msg_box.setWindowTitle("GeoPackage processing Error")
                 msg_box.setDetailedText(
-                    f'The geopackage layer {path_to_gpkg} CRS is invalid.'
+                    f"The geopackage layer {path_to_gpkg} CRS is invalid."
                 )
                 msg_box.exec()
             else:
@@ -357,10 +350,7 @@ class PolygonSpikeRemover:
 
         for _item in data_source.itertuples():
             geom = _item.geometry
-            ext = process_geometry.process_sequence(
-                azimuth_ext,
-                geom.exterior.coords
-            )
+            ext = process_geometry.process_sequence(azimuth_ext, geom.exterior.coords)
             interiors = []
             for inner in geom.interiors:
                 processed_interior_ring = process_geometry.process_sequence(
@@ -373,9 +363,7 @@ class PolygonSpikeRemover:
             res.append((_item.name, geometry.Polygon(ext, interiors)))
 
         processed_ds = GeoDataFrame(
-            res,
-            columns=['name', 'geometry'],
-            crs=data_source.crs
+            res, columns=["name", "geometry"], crs=data_source.crs
         )
         self._save_gpkg(file_path, processed_ds)
 
@@ -387,9 +375,9 @@ class PolygonSpikeRemover:
         :param clean_ds: Path to the cleaned data frame.
         :type clean_ds: GeoPandas DataFrame
         """
-        path = output.split('|')[0]
-        file_path = path.partition('.')
-        output_path = file_path[0] + '_output' + '.gpkg'
+        path = output.split("|")[0]
+        file_path = path.partition(".")
+        output_path = file_path[0] + "_output" + ".gpkg"
         if output_path:
             save_geopackage(output_path, clean_ds)
             self._display_cleaned_gpkg(output_path)
@@ -405,23 +393,17 @@ class PolygonSpikeRemover:
             msg_box.setIcon(QMessageBox.Critical)
             msg_box.setText("Error in loading layer")
             msg_box.setWindowTitle("GeoPackage Loading Error")
-            msg_box.setDetailedText(
-                f'The geopackage layer {path} could not be loaded.'
-            )
+            msg_box.setDetailedText(f"The geopackage layer {path} could not be loaded.")
             msg_box.exec()
         else:
             # Add processed layer in QGIS Map view
-            v_layer = self.iface.addVectorLayer(
-                path, 'output', 'ogr'
-            )
+            v_layer = self.iface.addVectorLayer(path, "output", "ogr")
             if not v_layer:
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Critical)
                 msg_box.setText("Invalid GeoPackage layer")
                 msg_box.setWindowTitle("GeoPackage Loading Error")
-                msg_box.setDetailedText(
-                    f'The geopackage layer {path} is invalid.'
-                )
+                msg_box.setDetailedText(f"The geopackage layer {path} is invalid.")
                 msg_box.exec()
 
             self.btn_remove_spike.setDisabled(True)

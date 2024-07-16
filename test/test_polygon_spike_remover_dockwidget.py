@@ -8,9 +8,9 @@
 
 """
 
-__author__ = 'contact@josephkariuki.com'
-__date__ = '2022-01-23'
-__copyright__ = 'Copyright 2022, Joseph Kariuki'
+__author__ = "contact@josephkariuki.com"
+__date__ = "2022-01-23"
+__copyright__ = "Copyright 2022, Joseph Kariuki"
 
 import sys
 import unittest

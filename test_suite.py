@@ -24,27 +24,26 @@ except ImportError:
 try:
     import coverage
 except ImportError:
-    pipmain(['install', 'coverage'])
+    pipmain(["install", "coverage"])
     import coverage
 
-__author__ = 'Alessandro Pasotti'
-__revision__ = '$Format:%H$'
-__date__ = '30/04/2018'
-__copyright__ = (
-    'Copyright 2018, North Road')
+__author__ = "Alessandro Pasotti"
+__revision__ = "$Format:%H$"
+__date__ = "30/04/2018"
+__copyright__ = "Copyright 2018, North Road"
 
 
 def _run_tests(test_suite, package_name, with_coverage=False):
     """Core function to test a test suite."""
     count = test_suite.countTestCases()
-    print('########')
-    print('%s tests has been discovered in %s' % (count, package_name))
-    print('Python GDAL : %s' % gdal.VersionInfo('VERSION_NUM'))
-    print('########')
+    print("########")
+    print("%s tests has been discovered in %s" % (count, package_name))
+    print("Python GDAL : %s" % gdal.VersionInfo("VERSION_NUM"))
+    print("########")
     if with_coverage:
         cov = coverage.Coverage(
-            source=['/polygon_spike_remover'],
-            omit=['*/test/*'],
+            source=["/polygon_spike_remover"],
+            omit=["*/test/*"],
         )
         cov.start()
 
@@ -58,11 +57,11 @@ def _run_tests(test_suite, package_name, with_coverage=False):
         # Produce HTML reports in the `htmlcov` folder and open index.html
         # cov.html_report()
         report.close()
-        with open(report.name, 'r') as fin:
+        with open(report.name, "r") as fin:
             print(fin.read())
 
 
-def test_package(package='test'):
+def test_package(package="test"):
     """Test package.
     This function is called by travis without arguments.
 
@@ -79,12 +78,11 @@ def test_package(package='test'):
 
 def test_environment():
     """Test package with an environment variable."""
-    package = os.environ.get('TESTING_PACKAGE', 'test')
+    package = os.environ.get("TESTING_PACKAGE", "test")
     test_loader = unittest.defaultTestLoader
     test_suite = test_loader.discover(package)
     _run_tests(test_suite, package)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_package()
-

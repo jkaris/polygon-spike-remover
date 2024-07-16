@@ -34,4 +34,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     """
     #
     from .polygon_spike_remover import PolygonSpikeRemover
+
     return PolygonSpikeRemover(iface)
