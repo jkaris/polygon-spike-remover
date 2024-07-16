@@ -9,7 +9,7 @@
                              -------------------
         begin                : 2022-01-23
         copyright            : (C) 2022 by Joseph Kariuki
-        email                : contact@josephkariuki.com
+        email                : me@josephkariuki.com
         git sha              : $Format:%H$
  ***************************************************************************/
 
